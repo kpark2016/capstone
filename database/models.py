@@ -1,10 +1,9 @@
 import os
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
 
 database_path = 'postgresql://postgres:1111@localhost:5432/casting'
-
 db = SQLAlchemy()
 
 def setup_db(app):
@@ -12,9 +11,6 @@ def setup_db(app):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-
-def db_drop_and_create_all():
-    db.drop_all()
     db.create_all()
 
 class Movie(db.Model):
