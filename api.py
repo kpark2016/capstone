@@ -39,7 +39,7 @@ def create_app(test_config=None):
 
             return jsonify({
                 'success': True,
-                'deleted': movie_id,
+                'deleted': int(movie_id),
                 'movies': movies,
                 'totalMovies': len(Movie.query.all())
             })
