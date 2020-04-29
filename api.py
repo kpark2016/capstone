@@ -7,12 +7,13 @@ from flask_cors import CORS
 from database.models import setup_db, Movie, Actor
 from auth.auth import AuthError, requires_auth
 
-# End points
+
 def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
-
+    
+    # End points
     @app.route('/movies')
     @requires_auth('get:movies')
     def get_movies(payload):
@@ -196,30 +197,31 @@ def create_app(test_config=None):
         except:
             abort(422)
 
+    # Error Handling
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+                        "success": False,
+                        "error": 422,
+                        "message": "unprocessable"
+                        }), 422
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+                        "success": False,
+                        "error": 404,
+                        "message": "resource not found"
+                        }), 404
+
+
+    @app.errorhandler(AuthError)
+    def auth_error(error):
+        return jsonify({
+                        "success": False,
+                        "error": AuthError,
+                        "message": "resource not found"
+                        }), AuthError
+        
+
     return app
-
-# Error Handling
-@app.errorhandler(422)
-def unprocessable(error):
-    return jsonify({
-                    "success": False,
-                    "error": 422,
-                    "message": "unprocessable"
-                    }), 422
-
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({
-                    "success": False,
-                    "error": 404,
-                    "message": "resource not found"
-                    }), 404
-
-
-@app.errorhandler(AuthError)
-def auth_error(error):
-    return jsonify({
-                    "success": False,
-                    "error": AuthError,
-                    "message": "resource not found"
-                    }), AuthError
