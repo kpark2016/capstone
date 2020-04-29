@@ -14,6 +14,10 @@ def create_app(test_config=None):
     CORS(app)
     
     # End points
+    @app.route('/')
+    def welcome():
+        return "welcome to capstone kyuwon"
+
     @app.route('/movies')
     @requires_auth('get:movies')
     def get_movies(payload):
