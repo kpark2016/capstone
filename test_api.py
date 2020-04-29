@@ -4,7 +4,7 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
 
-from api import create_app
+from app import create_app
 from database.models import setup_db, db_drop_and_create_all, Movie, Actor
 
 # This test will delete all the rows in the db !! only use locally
