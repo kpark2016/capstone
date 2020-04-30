@@ -37,13 +37,14 @@ This will install all of the required packages we selected within the `requireme
 To run the server, execute:
 
 ```bash
+source setup.sh
 export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 ```
 
+Running setup.sh will set key environment variables which are AUTH0_DOMAIN, API_AUDIENCE, ALGORITHMS, DATABASE_URL.
 Setting the `FLASK_ENV` variable to `development` will detect file changes and restart the server automatically.
-
 Setting the `FLASK_APP` variable to `app.py` directs flask to use the `app.py` file to find the application. 
 
 ### Roles
@@ -92,8 +93,18 @@ PATCH '/movies/<int:movie_id>'
 - This require new title(string) and new release_date(integer).
 - This will update existing row in the database and it will show the id of the updated movie.
 
-## Testing
+### Testing
 To run the tests, run
 ```
+source setup.sh
 python test_api.py
 ```
+
+### Running the server on Heroku
+
+API is hosted live at Heroku on `https://capstone-kyuwon.herokuapp.com`
+
+You can test endpoints described above with [Postman](https://getpostman.com). 
+- Import the postman collection `capstone.postman_collection.json`
+- Right-click the collection folder for assistant, director, and producer.
+- Run the collection and test endpoints.
